@@ -10,7 +10,7 @@ interface TeacherInterface {
     workTeacherTasks(): string;
 }
 
-class Director implements DirectorInterface {
+export const Director = class Director implements DirectorInterface {
     workFromHome(): string {
         return "Working from home";
     }
@@ -22,7 +22,7 @@ class Director implements DirectorInterface {
     }
 }
 
-class Teacher implements TeacherInterface {
+export const Teacher = class Teacher implements TeacherInterface {
   workFromHome(): string {
     return "Cannot work from home";
   }
@@ -36,21 +36,21 @@ class Teacher implements TeacherInterface {
   }
 }
 
-const createEmployee = (salary: number | string): Director | Teacher => {
+export const createEmployee = (salary: number | string): DirectorInterface | TeacherInterface => {
     return (typeof salary === "number" && salary < 500) ? new Teacher() : new Director();
 }
 
-const isDirector = (employee: Director | Teacher): employee is Director => {
-    return (employee as Director).workDirectorTasks !== undefined;
+export const isDirector = (employee: DirectorInterface | TeacherInterface): employee is DirectorInterface => {
+    return (employee as DirectorInterface).workDirectorTasks !== undefined;
 }
 
-const executeWork = (employee: Director | Teacher) => {
+export const executeWork = (employee: DirectorInterface | TeacherInterface): string => {
     return isDirector(employee) ? employee.workDirectorTasks() : employee.workTeacherTasks()
 }
 
 type Subjects = 'Math' | 'History';
 
-const teachClass = (todayClass: Subjects): string => {
+export const teachClass = (todayClass: Subjects): string => {
     return (todayClass === "Math") ? "Teaching Math" : "Teaching History";
 }
 
